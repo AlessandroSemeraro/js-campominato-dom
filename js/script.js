@@ -16,7 +16,7 @@ let isGameOver = false;
 
 //click event//
 button.addEventListener("click", function() {
-
+    resetGame();
     mainContentEl.innerHTML='';
 
     const bombs = [];
@@ -33,6 +33,7 @@ button.addEventListener("click", function() {
         mainContentEl.appendChild(newSquare);
         
         newSquare.addEventListener('click',function(){
+            if (isGameOver) return; 
             const contentSquare = i;
             newSquare.innerHTML = contentSquare;
             
@@ -40,19 +41,22 @@ button.addEventListener("click", function() {
             //console.log(contentSquare);
 
             if (bombs.includes(contentSquare)){
-                newSquare.classList.toggle('bg-red');
-                resetGame();
+                newSquare.classList.add('bg-red');
+                isGameOver = true;
                 
             } else {
-                newSquare.classList.toggle('bg-blue');
+                newSquare.classList.add('bg-blue');
                 turnCounter++;
                 updateCurrentScore();
+                console.log(userScore)
                 if( turnCounter == (numberCells - numberBombs)){
-                    winGame()
+                    isGameOver=true
                 }
             }
             
-        }
+        },  
+        { once: true }
+
 )}
 })
   
@@ -73,7 +77,7 @@ function getRandomNumber(minNumber, maxNumber){
 
 //SCORE//
 function updateCurrentScore(){
-    userScore++;
+    userScore += 1;
     scoreboardEl.innerText = userScore;
 }
 
@@ -90,10 +94,9 @@ function showBombCells(){
 //END GAME//
 function resetGame (){
     userScore = 0;
-    turnCounter=0
+    turnCounter=0;
     isGameOver = false;
-    updateCurrentScore(userScore);
-    
+    scoreboardEl.innerText= userScore;
 }
 
 //WIN//
