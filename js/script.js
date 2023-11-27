@@ -46,6 +46,7 @@ button.addEventListener("click", function() {
             } else {
                 newSquare.classList.toggle('bg-blue');
                 turnCounter++;
+                updateCurrentScore();
                 if( turnCounter == (numberCells - numberBombs)){
                     winGame()
                 }
@@ -71,8 +72,9 @@ function getRandomNumber(minNumber, maxNumber){
 }
 
 //SCORE//
-function updateCurrentScore(scoreToUpdate){
-    scoreboardEl.innerText = scoreToUpdate;
+function updateCurrentScore(){
+    userScore++;
+    scoreboardEl.innerText = userScore;
 }
 
 //CELLE BOMBE//
